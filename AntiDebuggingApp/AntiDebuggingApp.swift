@@ -25,10 +25,7 @@ struct AntiDebuggingApp: App {
         
         // 2. syscall 방식 (주석 해제하면 즉시 디버거 차단)
 //         debugger_syscall()
-        
-        // 3. ARM Assembly 방식 (주석 해제하면 즉시 디버거 차단)
-//         check_asm_debugger()
-        
+
         print("[AntiDebug] 안티디버깅 시스템 초기화 완료")
     }
 }
