@@ -12,13 +12,13 @@ class AntiDebuggingManager: ObservableObject {
     
     // 각 안티디버깅 기법을 개별적으로 활성화/비활성화
     private let enabledMethods = [
-        "ptrace": false, //감지하고 attach 안됨
-        "sysctl": false, //감지함
-        "syscall": false, // 감지하고 attach 안됨
-        "exception_ports": false, //감지함
-        "isatty": false, //감지한다고 하는데 안되는듯..?
-        "ioctl": false, //안되는거 같은데..?
-        "asm": true // 감지하고 attach 안됨
+        "ptrace": false,
+        "sysctl": false,
+        "syscall": true,
+        "exception_ports": false,
+        "isatty": false,
+        "ioctl": false,
+        "asm": false
     ]
     
     func startMonitoring() {
@@ -73,12 +73,6 @@ class AntiDebuggingManager: ObservableObject {
         if enabledMethods["ioctl"] == true {
             let isDebugged = check_ioctl()
             results.append(DebugResult(method: "ioctl", isDebugged: isDebugged))
-        }
-        
-        // 7. ARM Assembly 방식 (주석 해제하면 활성화)
-        if enabledMethods["asm"] == true {
-             check_asm_debugger() // 실제 앱에서는 주석 해제
-            results.append(DebugResult(method: "asm", isDebugged: false))
         }
         
         DispatchQueue.main.async {
